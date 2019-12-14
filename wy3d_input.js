@@ -7,11 +7,6 @@ var space = false;
 function initInput() {
     document.addEventListener('keydown', keyDownHandler, false);
     document.addEventListener('keyup', keyUpHandler, false);
-
-    document.addEventListener("mousedown", mouseDown, false);
-    document.addEventListener("mouseup", mouseUp, false);
-    document.addEventListener("mouseout", mouseUp, false);
-    document.addEventListener("mousemove", mouseMove, false);
 }
 
 // KEYBOARD
