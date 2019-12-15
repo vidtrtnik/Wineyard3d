@@ -1,10 +1,12 @@
 body {
+  height: 125vh;
   margin: 0;
 }
 
-.container {
-  position: relative;
+#gradient {
+  background-image: linear-gradient(green, seagreen, darkgreen);
 }
+
 #overlay {
   position: absolute;
   left: 7px;
@@ -12,8 +14,35 @@ body {
   background-color: rgba(0, 0, 0, 0.66);
   color: white;
   font-family: monospace;
+  font-size: 18px;
   padding: 1em;
   border-radius: 1em;
   border: 3px solid #ffffff;
   text-shadow: 0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white;
+}
+
+.container {
+  position: absolute;
+  margin: auto;
+  top: 175px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 1280px;
+  height: 720px;
+}
+
+h1 {
+  margin: auto;
+  color:red;
+  align: "center";
+  font-family: 'Roboto', sans-serif;
+  text-shadow: 0px 0px 3px white, 0px 0px 3px white, 0px 0px 3px white, 0px 0px 3px white;
+}
+h2 {
+  margin: auto;
+  align: "center";
+  color: aqua;
+  font-family: 'Roboto', sans-serif;
+  text-shadow: 0px 0px 3px white, 0px 0px 3px white, 0px 0px 3px white, 0px 0px 3px white;
 }
