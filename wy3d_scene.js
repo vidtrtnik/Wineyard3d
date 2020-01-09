@@ -23,7 +23,7 @@ class wy3d_Scene {
 
     setBackgroundTexture(texture) {
         this.backgroundTexture = texture;
-        this.backgroundQuadRes = renderer.wy3d.addResource("fboQuad", "./models/fboQuad.wy3dm");
+        this.backgroundQuadRes = renderer.wy3d.addResource("fboQuad", "./models/fboQuad.wy3dm") || renderer.wy3d.addResource("fboQuad", "./Wineyard3d/models/fboQuad.wy3dm");
         this.backgroundQuadModel = new wy3d_Model(this.backgroundQuadRes);
         this.backgroundObject = new wy3d_Object("backgroundQuadModel", this.backgroundQuadModel, this.backgroundTexture);
     }

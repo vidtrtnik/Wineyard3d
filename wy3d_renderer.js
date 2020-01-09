@@ -69,32 +69,32 @@ class wy3d_Renderer {
     }
 
     initShaders() {
-        var vs_texture_code = loadResource("vs_texture_code", "./shaders/vs_texture.glsl");
-        var fs_texture_code = loadResource("fs_texture_code", "./shaders/fs_texture.glsl");
+        var vs_texture_code = loadResource("vs_texture_code", "./Wineyard3d/shaders/vs_texture.glsl") || loadResource("vs_texture_code", "./shaders/vs_texture.glsl");
+        var fs_texture_code = loadResource("fs_texture_code", "./Wineyard3d/shaders/fs_texture.glsl") || loadResource("fs_texture_code", "./shaders/fs_texture.glsl");
         this.mainShader = new Shader(vs_texture_code, fs_texture_code);
 
-        var vs_grayscale_code = loadResource("vs_grayscale_code", "./shaders/vs_grayscale.glsl");
-        var fs_grayscale_code = loadResource("fs_grayscale_code", "./shaders/fs_grayscale.glsl");
+        var vs_grayscale_code = loadResource("vs_grayscale_code", "./Wineyard3d/shaders/vs_grayscale.glsl") || loadResource("vs_grayscale_code", "./shaders/vs_grayscale.glsl");
+        var fs_grayscale_code = loadResource("fs_grayscale_code", "./Wineyard3d/shaders/fs_grayscale.glsl") || loadResource("fs_grayscale_code", "./shaders/fs_grayscale.glsl");
         this.grayscaleShader = new Shader(vs_grayscale_code, fs_grayscale_code);
 
-        var vs_blur_code = loadResource("vs_blur_code", "./shaders/vs_blur.glsl");
+        var vs_blur_code = loadResource("vs_blur_code", "./Wineyard3d/shaders/vs_blur.glsl") || loadResource("vs_blur_code", "./shaders/vs_blur.glsl");
 
-        var fs_blurH_code = loadResource("fs_blurH_code", "./shaders/fs_blurH.glsl");
+        var fs_blurH_code = loadResource("fs_blurH_code", "./Wineyard3d/shaders/fs_blurH.glsl") || loadResource("fs_blurH_code", "./shaders/fs_blurH.glsl");
         this.blurHShader = new Shader(vs_blur_code, fs_blurH_code);
 
-        var fs_blurV_code = loadResource("fs_blurV_code", "./shaders/fs_blurV.glsl");
+        var fs_blurV_code = loadResource("fs_blurV_code", "./Wineyard3d/shaders/fs_blurV.glsl") || loadResource("fs_blurV_code", "./shaders/fs_blurV.glsl");
         this.blurVShader = new Shader(vs_blur_code, fs_blurV_code);
 
-        var vs_brightTresh_code = loadResource("vs_brightTresh_code", "./shaders/vs_bright.glsl");
-        var fs_brightTresh_code = loadResource("fs_brightTresh_code", "./shaders/fs_bright.glsl");
+        var vs_brightTresh_code = loadResource("vs_brightTresh_code", "./Wineyard3d/shaders/vs_bright.glsl") || loadResource("vs_brightTresh_code", "./shaders/vs_bright.glsl");
+        var fs_brightTresh_code = loadResource("fs_brightTresh_code", "./Wineyard3d/shaders/fs_bright.glsl") || loadResource("fs_brightTresh_code", "./shaders/fs_bright.glsl");
         this.brightTreshShader = new Shader(vs_brightTresh_code, fs_brightTresh_code);
 
-        var vs_combine_code = loadResource("vs_combine_code", "./shaders/vs_combine.glsl");
-        var fs_combine_code = loadResource("fs_combine_code", "./shaders/fs_combine.glsl");
+        var vs_combine_code = loadResource("vs_combine_code", "./Wineyard3d/shaders/vs_combine.glsl") || loadResource("vs_combine_code", "./shaders/vs_combine.glsl");
+        var fs_combine_code = loadResource("fs_combine_code", "./Wineyard3d/shaders/fs_combine.glsl") || loadResource("fs_combine_code", "./shaders/fs_combine.glsl");
         this.combineShader = new Shader(vs_combine_code, fs_combine_code);
 
-        var vs_fullscreen_code = loadResource("vs_fullscreen_code", "./shaders/vs_fullscreen.glsl");
-        var fs_fullscreen_code = loadResource("fs_fullscreen_code", "./shaders/fs_fullscreen.glsl");
+        var vs_fullscreen_code = loadResource("vs_fullscreen_code", "./Wineyard3d/shaders/vs_fullscreen.glsl") || loadResource("vs_fullscreen_code", "./shaders/vs_fullscreen.glsl");
+        var fs_fullscreen_code = loadResource("fs_fullscreen_code", "./Wineyard3d/shaders/fs_fullscreen.glsl") || loadResource("fs_fullscreen_code", "./shaders/fs_fullscreen.glsl");
         this.fullscreenShader = new Shader(vs_fullscreen_code, fs_fullscreen_code);
 
         this.setBlurShader(3.50 / this.resolution_x, 3.50 / this.resolution_y);

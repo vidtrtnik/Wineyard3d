@@ -23,6 +23,8 @@ function loadResource(type, path) {
     var resource = null;
     getFile(path, type, function (contents) {
         resource = contents;
+        if(resource === null || resource === undefined)
+            return false;
     });
 
     return resource;
@@ -36,7 +38,6 @@ function getFile(url, type, callback) {
     console.log("getFile: " + url);
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, false);
-    //xhr.responseType = 'arraybuffer';
     xhr.overrideMimeType("text/plain; charset=x-user-defined");
     xhr.onload = function () {
         if (type == 'wy3dt') {
@@ -48,11 +49,14 @@ function getFile(url, type, callback) {
             var png = UPNG.decode(buffer);
             callback(png);
         } else {
-            callback(xhr.response);
+            var cb_arg = xhr.response;
+            if(xhr.status === 404)
+                cb_arg = null;
+            
+            callback(cb_arg);
         }
     };
 
-    //xhr.send(null);
     xhr.send();
 };
 

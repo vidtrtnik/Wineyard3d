@@ -30,6 +30,9 @@ class Wineyard3D {
 
     addResource(name, path) {
         const newResource = new wy3d_Resource(name, path);
+        if(newResource.getRes() === false)
+			return false;
+        
         this.RESOURCES.push(newResource);
         return newResource;
     }
