@@ -21,6 +21,8 @@ class Wineyard3D {
         renderer = new wy3d_Renderer(this, this.resolution_x, this.resolution_y, this.pp);
         this.RESOURCES = [];
         this.SCENES = [];
+        
+        this.currentScene = "";
 
         initInput();
 
@@ -64,6 +66,23 @@ class Wineyard3D {
 
         return null;
     }
+    
+    setCurrentScene(scene) {
+		this.currentScene = scene;
+		
+		for (var i = 0; i < this.SCENES.length; i++) {
+            const tmpScene = this.SCENES[i];
+			tmpScene.stop();
+		}
+	}
+	
+	renderScene(scene, gameFunction) {
+		this.setCurrentScene(scene);
+        
+        scene.start();
+        scene.animationRequest = requestAnimationFrame(scene.render.bind(scene, scene.time, gameFunction));
+    }
+    
 
     initWebGL(canvas) {
         var tmp_gl = null;
@@ -104,7 +123,7 @@ class Wineyard3D {
         this.logoScene = this.addScene("LogoScene");
         const logoObject = this.logoScene.addObject("logoObject", m_logo, t_logo, 0.0, 0.0, -5.0, 0, 20, -90);
 
-        this.logoScene.renderScene(dummy);
+        this.renderScene(this.logoScene, dummy);
     }
 }
 
