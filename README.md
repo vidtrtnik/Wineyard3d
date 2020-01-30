@@ -17,6 +17,7 @@ Currently, Wineyard3d only supports textures in 8-bit PNG format, without alpha 
 - Custom glsl shaders
 - Collision detection (3D AABB)
 - Keyboard input
+- Alpha blending (custom opacity for ingame objects)
 
 ## Logo scene example
 Pull this repository to your local machine. Run a web server from folder Wineyard3d (for example, with Python: <i>python3 -m http.server</i>). Open web browser, navigate to your server address and open <b>logo.html</b>.
@@ -33,7 +34,6 @@ Pull this repository to your local machine. Run a web server from folder Wineyar
 TODOs:
 - Documentation and tutorials
 - Sound, music support
-- Blending
 - Improved lighting
 - Mouse input
 
