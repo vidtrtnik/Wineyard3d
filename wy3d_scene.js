@@ -26,7 +26,7 @@ class wy3d_Scene {
 
     setBackgroundTexture(texture) {
         this.backgroundTexture = texture;
-        this.backgroundQuadRes = renderer.wy3d.addResource("fboQuad", "./models/fboQuad.wy3dm") || renderer.wy3d.addResource("fboQuad", "./Wineyard3d/models/fboQuad.wy3dm");
+        this.backgroundQuadRes = renderer.wy3d.addResource("fboQuad", "./Wineyard3d/models/fboQuad.wy3dm") || renderer.wy3d.addResource("fboQuad", "./models/fboQuad.wy3dm");
         this.backgroundQuadModel = new wy3d_Model(this.backgroundQuadRes);
         this.backgroundObject = new wy3d_Object("backgroundQuadModel", this.backgroundQuadModel, this.backgroundTexture);
     }
@@ -57,12 +57,12 @@ class wy3d_Scene {
         return this.name;
     }
 
-    addObject(name, model, texture, x, y, z, rx, ry, rz, sx, sy, sz) {
+    addObject(name, model, texture, x, y, z, rx, ry, rz, sx, sy, sz, lr, lg, lb, a) {
         if (name.constructor.name == "wy3d_Object") {
             this.OBJECTS.push(name);
             return name;
         }
-        var tmpObject = new wy3d_Object(name, model, texture, x, y, z, rx, ry, rz, sx, sy, sz);
+        var tmpObject = new wy3d_Object(name, model, texture, x, y, z, rx, ry, rz, sx, sy, sz, lr, lg, lb, a);
         this.OBJECTS.push(tmpObject);
         return tmpObject;
     }

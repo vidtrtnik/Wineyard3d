@@ -121,7 +121,7 @@ class Wineyard3D {
         const t_logo = new wy3d_Texture(t_res_logo);
 
         this.logoScene = this.addScene("LogoScene");
-        const logoObject = this.logoScene.addObject("logoObject", m_logo, t_logo, 0.0, 0.0, -5.0, 0, 20, -90);
+        const logoObject = this.logoScene.addObject("logoObject", m_logo, t_logo, 0.0,0.0,-5.0, 0,20,-90, 1,1,1, 1,1,1, 0.44);
 
         this.renderScene(this.logoScene, dummy);
     }

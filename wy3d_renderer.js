@@ -149,6 +149,14 @@ class wy3d_Renderer {
     }
     
     drawObject(shader, object, ambLight, tex) {
+        var alpha = object.opacity;
+        if (alpha !== undefined && alpha !== null && alpha !== 1.0)
+        {
+            gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+            gl.enable(gl.BLEND);
+            gl.disable(gl.DEPTH_TEST);
+        }
+
         const position = object.position;
         const rotation = object.rotation;
         const scale = object.scale;
@@ -186,7 +194,12 @@ class wy3d_Renderer {
         else
             gl.bindTexture(gl.TEXTURE_2D, object.texture.tex);
 
+        
         gl.uniform1i(shader.shaderProgram.uSampler, 0);
+        
+        //if (alpha !== undefined && alpha !== null && alpha !== 1.0)
+        gl.uniform1f(shader.shaderProgram.uAlpha, alpha);
+        
         gl.uniform1i(shader.shaderProgram.uUseLightning, true);
         gl.uniform3f(shader.shaderProgram.uAmbientColor, ambLight[0], ambLight[1], ambLight[2]);
         gl.uniform3f(shader.shaderProgram.uLightDirection, 0, 0, 1);
@@ -197,6 +210,12 @@ class wy3d_Renderer {
         gl.uniformMatrix4fv(shader.shaderProgram.uNMatrix, false, nMatrix);
 
         gl.drawElements(gl.TRIANGLES, object.model.i.length, gl.UNSIGNED_SHORT, 0);
+        
+        if (alpha !== undefined && alpha !== null && alpha !== 1.0)
+        {
+            gl.disable(gl.BLEND);
+            gl.enable(gl.DEPTH_TEST);
+        }
     }
     
     renderBackground(bckgTexture, dX, dY) {

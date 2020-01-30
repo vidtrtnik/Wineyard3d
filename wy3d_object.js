@@ -1,5 +1,5 @@
 class wy3d_Object {
-    constructor(name, model, texture, x, y, z, rx, ry, rz, sx, sy, sz, lr, lg, lb) {
+    constructor(name, model, texture, x, y, z, rx, ry, rz, sx, sy, sz, lr, lg, lb, a) {
         this.name = name;
         this.model = model;
         this.texture = texture;
@@ -8,6 +8,7 @@ class wy3d_Object {
         this.scale = setScale(sx, sy, sz);
         this.dimensions = calculateDimensions(this.scale, this.model.boundingBox);
         this.light = setLightning(lr, lg, lb);
+        this.opacity = setOpacity(a);
     }
 
     setPosition(x, y, z) {
@@ -65,6 +66,16 @@ class wy3d_Object {
 
         this.light = [new_lr, new_lg, new_lb];
     }
+    
+    setOpacity(a) {
+        var new_a = 0.5;
+
+        if (a !== undefined && a <= 1.0 && a >= 0.0) {
+            new_a = a;
+        }
+
+        this.opacity = new_a;
+    }
 
 
 
@@ -82,6 +93,11 @@ class wy3d_Object {
 
     addLightning(lr, lg, lb) {
         this.light = [this.light[0] + lr, this.light[1] + lg, this.light[2] + lb];
+    }
+    
+    addOpacity(a) {
+        if (this.opacity + a <= 1.0 && this.opacity + a >= 0.0) 
+        this.opacity = this.opacity + a;
     }
 
 }
@@ -154,3 +170,14 @@ function setLightning(lr, lg, lb) {
     var ret = [new_lr, new_lg, new_lb];
     return ret;
 }
+
+function setOpacity(a) {
+    var new_a = 1.0;
+    if (a !== undefined && a <= 1.0 && a >= 0.0)  {
+        new_a = a;
+    }
+
+        return new_a;
+    }
+    
+    
