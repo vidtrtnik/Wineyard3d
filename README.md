@@ -22,7 +22,8 @@ Currently, Wineyard3d only supports textures in 8-bit PNG format, without alpha 
 ## Logo scene example
 Pull this repository to your local machine. Run a web server from folder Wineyard3d (for example, with Python: <i>python3 -m http.server</i>). Open web browser, navigate to your server address and open <b>logo.html</b>.
 
-## Example code (Logo scene)
+## Examples
+### Logo scene example
 ```javascript
   var canvas = document.getElementById("canvas");
   
@@ -31,11 +32,19 @@ Pull this repository to your local machine. Run a web server from folder Wineyar
 ```
 
 
-TODOs:
-- Documentation and tutorials
-- Sound, music support
+### Third-Party libraries
+In its current state (v0.0.1), Wineyard3d uses some open source javascript libraries:
+- [UPNG.js](https://github.com/photopea/UPNG.js)
+- [pako](https://github.com/nodeca/pako)
+- [glMatrix](http://glmatrix.net)
+
+
+### TODOs:
+- Documentation, more code examples and tutorials
+- Audio support (music, sound effects)
 - Improved lighting
 - Mouse input
+- Touchscreen support (for browsers on Android/iOS)
 
 
 <i>Current version: 0.0.1</i>
