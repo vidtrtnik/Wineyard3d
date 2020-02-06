@@ -24,7 +24,8 @@ class Wineyard3D {
         
         this.currentScene = "";
 
-        initInput();
+        wy3d_Input = wy3d_InitializeInput("keyboard");
+		this.input = wy3d_Input;
 
         var logoScene = 0;
 
