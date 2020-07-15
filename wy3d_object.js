@@ -9,6 +9,8 @@ class wy3d_Object {
     this.dimensions = calculateDimensions(this.scale, this.model.boundingBox);
     this.light = setLightning(lr, lg, lb);
     this.opacity = setOpacity(a);
+    this.colission = false;
+    this.collisionInfo = [];
   }
 
   setPosition(x, y, z) {
@@ -68,7 +70,7 @@ class wy3d_Object {
   }
 
   setOpacity(a) {
-    var new_a = 0.5;
+    var new_a = 1.0;
 
     if (a !== undefined && a <= 1.0 && a >= 0.0) {
       new_a = a;
@@ -127,9 +129,9 @@ function setPosition(x, y, z) {
 }
 
 function setRotation(rx, ry, rz) {
-  var new_rx = 1.0;
-  var new_ry = 1.0;
-  var new_rz = 1.0;
+  var new_rx = 0.0;
+  var new_ry = 0.0;
+  var new_rz = 0.0;
 
   if (rx !== undefined && ry !== undefined && rz !== undefined) {
     new_rx = rx;

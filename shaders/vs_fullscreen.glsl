@@ -1,10 +1,10 @@
 precision mediump float;
 
-attribute vec2 inPos;
-varying   vec2 vertPos;
+attribute vec2 aVertexPosition;
+varying vec2 vVertexPosition;
 
 void main()
 {
-    vertPos     = inPos;
-    gl_Position = vec4( inPos, 0.0, 1.0 );
+    vVertexPosition = aVertexPosition;
+    gl_Position = vec4(aVertexPosition, 0.0, 1.0);
 }

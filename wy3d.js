@@ -104,6 +104,7 @@ class Wineyard3D {
 
   setPP(v) {
     this.pp = v;
+    renderer.pp = this.pp;
   }
 
   getVendorInfo() {
@@ -113,25 +114,4 @@ class Wineyard3D {
   getRendererInfo() {
     return this.rendererInfo;
   }
-
-  rotateLogo() {
-    var logoObject = logoScene.getObject("logoObject")
-    logoObject.addRotation(0, 1, 0);
-  }
-  renderLogoScene() {
-    const m_res_logo = this.addResource("m_res_logo", "./models/logo.wy3dm");
-    const t_res_logo = this.addResource("m_res_logo", "./textures/logo.wy3dt");
-    const m_logo = new wy3d_Model(m_res_logo);
-    const t_logo = new wy3d_Texture(t_res_logo);
-
-
-    this.logoScene = this.addScene("LogoScene");
-    const logoObject = this.logoScene.addObject("logoObject", m_logo, t_logo, 0.0, 0.0, -5.0, 0, 20, -90, 1, 1, 1, 1, 1, 1, 0.44);
-    this.renderScene(this.logoScene, dummy);
-  }
-}
-
-function dummy() {
-  console.log("dummy");
-  return
 }

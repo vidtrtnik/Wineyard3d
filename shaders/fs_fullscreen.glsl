@@ -1,13 +1,13 @@
 precision mediump float;
 
-varying vec2      vertPos;
-uniform sampler2D u_texture;
+varying vec2 vVertexPosition;
+uniform sampler2D uTex;
 uniform float deltaX;
 uniform float deltaY;
 
 void main()
 {
-    vec2 texCoord = vec2( vertPos.s + deltaX, vertPos.t + deltaY ) * 0.5 + 0.5;
-    vec3 texColor = texture2D( u_texture, texCoord.st ).rgb;
-    gl_FragColor  = vec4( texColor.rgb, 1.0 );
+    vec2 vTextureCoords = vec2( vVertexPosition.s, vVertexPosition.t ) * 0.5 + 0.5;
+    highp vec4 originalColor = texture2D(uTex, vTextureCoords);
+    gl_FragColor  = vec4( originalColor.rgb, 1.0 );
 }

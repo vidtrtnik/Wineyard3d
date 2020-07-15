@@ -155,4 +155,43 @@ class wy3d_Scene {
     this.camPos = [x, y, z];
   }
 
+  checkCollisions() {
+    for (var i = 0; i < this.OBJECTS.length; i++) {
+      var obj1 = this.OBJECTS[i];
+      obj1.collisionInfo = [];
+
+      var obj1Xmin = obj1.position[0] - obj1.dimensions[0] / 2;
+      var obj1Xmax = obj1.position[0] + obj1.dimensions[0] / 2;
+
+      var obj1Ymin = obj1.position[1] - obj1.dimensions[1] / 2;
+      var obj1Ymax = obj1.position[1] + obj1.dimensions[1] / 2;
+
+      var obj1Zmin = obj1.position[2] - obj1.dimensions[1] / 2;
+      var obj1Zmax = obj1.position[2] + obj1.dimensions[1] / 2;
+
+      for (var j = 0; j < this.OBJECTS.length; j++) {
+        if (i == j)
+          continue;
+
+        var obj2 = this.OBJECTS[j];
+
+        var obj2Xmin = obj2.position[0] - obj1.dimensions[0] / 2;
+        var obj2Xmax = obj2.position[0] + obj1.dimensions[0] / 2;
+
+        var obj2Ymin = obj2.position[1] - obj1.dimensions[1] / 2;
+        var obj2Ymax = obj2.position[1] + obj1.dimensions[1] / 2;
+
+        var obj2Zmin = obj2.position[2] - obj1.dimensions[1] / 2;
+        var obj2Zmax = obj2.position[2] + obj1.dimensions[1] / 2;
+
+        if ((obj1Xmin <= obj2Xmax && obj1Xmax >= obj2Xmin) &&
+          (obj1Ymin <= obj2Ymax && obj1Ymax >= obj2Ymin) &&
+          (obj1Zmin <= obj2Zmax && obj1Zmax >= obj2Zmin)) {
+          obj1.collision = true;
+          obj1.collisionInfo.push(obj2.name);
+        }
+      }
+    }
+  }
+
 }

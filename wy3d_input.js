@@ -49,6 +49,10 @@ class wy3d_InputClass {
     var right = new wy3d_Key("right", 39);
     var space = new wy3d_Key("space", 32);
     var enter = new wy3d_Key("enter", 13);
+    var k1 = new wy3d_Key("1", 49);
+    var k2 = new wy3d_Key("2", 50);
+    var kG = new wy3d_Key("G", 71);
+    var kP = new wy3d_Key("P", 80);
 
     this.KEYS.push(up);
     this.KEYS.push(down);
@@ -56,6 +60,10 @@ class wy3d_InputClass {
     this.KEYS.push(right);
     this.KEYS.push(space);
     this.KEYS.push(enter);
+    this.KEYS.push(k1);
+    this.KEYS.push(k2);
+    this.KEYS.push(kG);
+    this.KEYS.push(kP);
 
     document.addEventListener('keydown', keyDownHandler, false);
     document.addEventListener('keyup', keyUpHandler, false);

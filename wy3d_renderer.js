@@ -98,7 +98,7 @@ class wy3d_Renderer {
     var fs_fullscreen_code = loadResource("fs_fullscreen_code", "./Wineyard3d/shaders/fs_fullscreen.glsl") || loadResource("fs_fullscreen_code", "./shaders/fs_fullscreen.glsl");
     this.fullscreenShader = new Shader(vs_fullscreen_code, fs_fullscreen_code);
 
-    this.setBlurShader(3.50 / this.resolution_x, 3.50 / this.resolution_y);
+    this.setBlurShader(2.0 / this.resolution_x, 2.0 / this.resolution_y);
   }
 
   setBlurShader(h, v) {

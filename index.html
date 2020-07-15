@@ -1,7 +1,14 @@
 <html>
 
 <head>
-  <title>Wineyard3d Logo Scene</title>
+  <title>Wineyard3d Demo Scene</title>
+
+  <meta charset="UTF-8">
+  <meta name="description" content="Wineyard3d - Demo Scene">
+  <meta name="keywords" content="HTML,WebGL,Wineyard3d">
+  <meta name="author" content="https://github.com/vidtrtnik">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" type="text/css" href="./style.css">
 
   <script src="./3rdparty/pako.js"></script>
@@ -25,15 +32,22 @@
 
 <body id="gradient" onload=start()>
   <h1 align="center" id="header">
-    <a href="https://www.github.com/vidtrtnik/Wineyard3d">Wineyard3d - v0.0.1</a>
+    <a href="https://www.github.com/vidtrtnik/Wineyard3d">Wineyard3d - v0.0.2</a>
   </h1>
   <h2 align="center" id="header2">
     <a href="https://www.github.com/vidtrtnik">https://www.github.com/vidtrtnik</a>
   </h2>
 
   <div class="container">
-    <canvas id="canvas" width="85vw" height="85vh"></canvas>
+    <canvas id="canvas" width='100vw' height="100vh"></canvas>
     <div id="overlay">
+      <div>Arrow keys - Move</div>
+      <div>Enter, Space - Rotate</div>
+      <div>1, 2 - Change opacity</div>
+      <div><br></div>
+      <div>P - Toggle Postprocessing</div>
+      <div>G - Toggle Grayscale shader</div>
+      <div><br></div>
       <div>FPS: <span id="overlay_fps"></span></div>
       <div>FT: <span id="overlay_ft"></span></div>
     </div>
