@@ -7,7 +7,7 @@ uniform float deltaY;
 
 void main()
 {
-    vec2 vTextureCoords = vec2( vVertexPosition.s, vVertexPosition.t ) * 0.5 + 0.5;
-    highp vec4 originalColor = texture2D(uTex, vTextureCoords);
+    vec2 vTextureCoords = vec2(vVertexPosition.s, vVertexPosition.t) * 0.5 + 0.5;
+    vec4 originalColor = texture2D(uTex, vTextureCoords);
     gl_FragColor  = vec4( originalColor.rgb, 1.0 );
 }

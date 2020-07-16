@@ -1,16 +1,15 @@
-class wy3d_Object {
-  constructor(name, model, texture, x, y, z, rx, ry, rz, sx, sy, sz, lr, lg, lb, a) {
+class wy3d_ObjectGroup {
+  constructor(name, group, x, y, z, rx, ry, rz, sx, sy, sz) {
     this.name = name;
-    this.model = model;
-    this.texture = texture;
+    this.group = group;
     this.position = setPosition(x, y, z);
     this.rotation = setRotation(rx, ry, rz);
     this.scale = setScale(sx, sy, sz);
-    this.dimensions = calculateDimensions(this.scale, this.model.boundingBox);
-    this.light = setLightning(lr, lg, lb);
-    this.opacity = setOpacity(a);
+
     this.colission = false;
     this.collisionInfo = [];
+
+    this.mvMatrixStack = [];
   }
 
   setPosition(x, y, z) {
@@ -55,63 +54,75 @@ class wy3d_Object {
     this.scale = [new_sx, new_sy, new_sz];
   }
 
-  setLightning(lr, lg, lb) {
-    var new_lr = 1.0;
-    var new_lg = 1.0;
-    var new_lb = 1.0;
-
-    if (lr !== undefined && lg !== undefined && lb !== undefined) {
-      new_lr = lr;
-      new_lg = lg;
-      new_lb = lb;
-    }
-
-    this.light = [new_lr, new_lg, new_lb];
-  }
-
-  setOpacity(a) {
-    var new_a = 1.0;
-
-    if (a !== undefined && a <= 1.0 && a >= 0.0) {
-      new_a = a;
-    }
-
-    this.opacity = new_a;
-  }
-
-
-
   setRotation(rx, ry, rz) {
     this.rotation = [rx, ry, rz];
+
+    this.setMvMatrix();
   }
 
   addRotation(rx, ry, rz) {
     this.rotation = [this.rotation[0] + rx, this.rotation[1] + ry, this.rotation[2] + rz];
+
+    this.setMvMatrix();
   }
 
   addScale(sx, sy, sz) {
     this.scale = [this.scale[0] + sx, this.scale[1] + sy, this.scale[2] + sz];
+
+    this.setMvMatrix();
   }
 
-  addLightning(lr, lg, lb) {
-    this.light = [this.light[0] + lr, this.light[1] + lg, this.light[2] + lb];
+  mvMatrixStack_push()
+  {
+    var copy = glMatrix.mat4.create();
+    glMatrix.mat4.set(mvMatrix, copy);
+    this.mvMatrixStack.push(copy);
   }
 
-  addOpacity(a) {
-    if (this.opacity + a <= 1.0 && this.opacity + a >= 0.0)
-      this.opacity = this.opacity + a;
+  mvMatrixStack_pop()
+  {
+    var mvMatrix = this.mvMatrixStack.pop();
+
+    if (this.mvMatrixStack.length == 0)
+      this.mvMatrixStack[0] = glMatrix.mat4.create();
+
+    return mvMatrix;
   }
 
+  mvMatrixStack_get()
+  {
+    return this.mvMatrixStack[this.mvMatrixStack.length - 1].slice();
+  }
+
+  mvMatrixStack_set(curr_mvMatrix)
+  {
+    this.mvMatrixStack[this.mvMatrixStack.length - 1] = curr_mvMatrix;
+  }
+
+  mvMatrixStack_rotateZ(deg)
+  {
+    var m = this.mvMatrixStack_get();
+    glMatrix.mat4.rotateZ(m, m, degToRad(deg));
+    this.mvMatrixStack_set(m);
+  }
+  mvMatrixStack_translate(px, py, pz)
+  {
+    var m = this.mvMatrixStack_get();
+    glMatrix.mat4.translate(m, m, [px, py, pz]);
+    this.mvMatrixStack_set(m);
+  }
+
+  setMvMatrix() {
+    var new_mvMatrix = this.mvMatrixStack_get();
+    
+    translate(new_mvMatrix, this.position[0], this.position[1], this.position[2]);
+    rotate(new_mvMatrix, this.rotation[0], this.rotation[1], this.rotation[2]);
+    scaling(new_mvMatrix, this.scale[0], this.scale[1], this.scale[2]);
+  
+    this.mvMatrixStack_set(new_mvMatrix);
+  }
 }
 
-function calculateDimensions(s, bb) {
-  var new_dims = [0.0, 0.0, 0.0];
-  new_dims[0] = bb[0] * s[0];
-  new_dims[1] = bb[1] * s[1];
-  new_dims[2] = bb[2] * s[2];
-
-  return new_dims;
-}
 
 function setPosition(x, y, z) {
   var pos_x = 0.0;
@@ -156,28 +167,4 @@ function setScale(sx, sy, sz) {
 
   var ret = [new_sx, new_sy, new_sz];
   return ret;
-}
-
-function setLightning(lr, lg, lb) {
-  var new_lr = 1.0;
-  var new_lg = 1.0;
-  var new_lb = 1.0;
-
-  if (lr !== undefined && lg !== undefined && lb !== undefined) {
-    new_lr = lr;
-    new_lg = lg;
-    new_lb = lb;
-  }
-
-  var ret = [new_lr, new_lg, new_lb];
-  return ret;
-}
-
-function setOpacity(a) {
-  var new_a = 1.0;
-  if (a !== undefined && a <= 1.0 && a >= 0.0) {
-    new_a = a;
-  }
-
-  return new_a;
 }

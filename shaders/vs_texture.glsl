@@ -1,3 +1,5 @@
+precision mediump float;
+
 attribute vec4 aVertexPosition;
 attribute vec3 aVertexNormal;
 attribute vec2 aVertexTextureCoords;
@@ -12,8 +14,8 @@ uniform vec3 uDirectionColor;
 
 uniform bool uUseLightning;
 
-varying highp vec2 vTextureCoord;
-varying highp vec3 vLightWeight;
+varying vec2 vTextureCoord;
+varying vec3 vLightWeight;
 
 void main(void)
 {

@@ -1,4 +1,5 @@
-var logoObject = null;
+var demoScene = null;
+var logoObject1 = null;
 
 var px = 0;
 var py = 0;
@@ -15,27 +16,28 @@ function start() {
     canvas.height = resy;
 
     wy = new Wineyard3D(canvas, resx, resy, togglePP);
-    renderLogoScene();
+    renderDemoScene();
 }
 
 function setGrayscale() {
-    wy.logoScene.grayscale = toggleGrayscale;
-    wy.logoScene.setGrayscale(0.5, 0.5, 0.5);
+    demoScene.grayscale = toggleGrayscale;
+    demoScene.setGrayscale(0.5, 0.5, 0.5);
 }
 
-function renderLogoScene() {
+function renderDemoScene() {
     const m_res_logo = wy.addResource("m_res_logo", "./models/logo.wy3dm");
     const t_res_logo = wy.addResource("m_res_logo", "./textures/logo.wy3dt");
     const m_logo = new wy3d_Model(m_res_logo);
     const t_logo = new wy3d_Texture(t_res_logo);
 
-    wy.logoScene = wy.addScene("LogoScene");
-    logoObject1 = wy.logoScene.addObject("logoObject1", m_logo, t_logo, px, py, pz, 0,-20,-90);
+    demoScene = wy.addScene("demoScene");
+    logoObject1 = demoScene.addObject("demoObject1", m_logo, t_logo);
 
-    wy.renderScene(wy.logoScene, logoFunction);
+    wy.renderScene(demoScene, demoFunction);
 }
 
-function logoFunction() {
+function demoFunction() {
+
     if (wy.input.get("up"))
         py += 0.05;
     if (wy.input.get("down"))

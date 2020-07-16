@@ -15,6 +15,7 @@ class wy3d_Renderer {
     this.blurVShader = null;
     this.grayscaleShader = null;
     this.brightTreshShader = null;
+    this.fxaaShader = null;
     this.combineShader = null;
     this.fullscreenShader = null;
     this.initShaders();
@@ -38,6 +39,7 @@ class wy3d_Renderer {
       this.fboBlurH = createFB(resolution_x, resolution_y);
       this.fboBlurV = createFB(resolution_x, resolution_y);
       this.fboGrayscale = createFB(resolution_x, resolution_y);
+      this.fboFxaa = createFB(resolution_x, resolution_y);
       this.fboCombine = createFB(resolution_x, resolution_y);
     }
 
@@ -46,6 +48,8 @@ class wy3d_Renderer {
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, 1, 1, -1, 1]), gl.STATIC_DRAW);
 
     this.showFps = true;
+
+    this.setFxaaFBSize(this.resolution_x, this.resolution_y);
   }
 
   setGL(bkgColor, res_x, res_y) {
@@ -89,6 +93,10 @@ class wy3d_Renderer {
     var vs_brightTresh_code = loadResource("vs_brightTresh_code", "./Wineyard3d/shaders/vs_bright.glsl") || loadResource("vs_brightTresh_code", "./shaders/vs_bright.glsl");
     var fs_brightTresh_code = loadResource("fs_brightTresh_code", "./Wineyard3d/shaders/fs_bright.glsl") || loadResource("fs_brightTresh_code", "./shaders/fs_bright.glsl");
     this.brightTreshShader = new Shader(vs_brightTresh_code, fs_brightTresh_code);
+
+    var vs_fxaa_code = loadResource("vs_fxaa_code", "./Wineyard3d/shaders/vs_fxaa.glsl") || loadResource("vs_fxaa_code", "./shaders/vs_fxaa.glsl");
+    var fs_fxaa_code = loadResource("fs_fxaa_code", "./Wineyard3d/shaders/fs_fxaa.glsl") || loadResource("fs_fxaa_code", "./shaders/fs_fxaa.glsl");
+    this.fxaaShader = new Shader(vs_fxaa_code, fs_fxaa_code);
 
     var vs_combine_code = loadResource("vs_combine_code", "./Wineyard3d/shaders/vs_combine.glsl") || loadResource("vs_combine_code", "./shaders/vs_combine.glsl");
     var fs_combine_code = loadResource("fs_combine_code", "./Wineyard3d/shaders/fs_combine.glsl") || loadResource("fs_combine_code", "./shaders/fs_combine.glsl");
@@ -144,14 +152,13 @@ class wy3d_Renderer {
 
     gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
     gl.disableVertexAttribArray(shaderProgram.aVertexPosition);
-
-    //gl.clear( gl.DEPTH_BUFFER_BIT );
-    //gl.enable( gl.DEPTH_TEST );
   }
 
-  drawObject(shader, object, ambLight, tex) {
+  drawObject(reset, shader, object, ambLight, tex) 
+  {
     var alpha = object.opacity;
-    if (alpha !== undefined && alpha !== null && alpha !== 1.0) {
+    if (alpha !== undefined && alpha !== null && alpha !== 1.0) 
+    {
       gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
       gl.enable(gl.BLEND);
       gl.disable(gl.DEPTH_TEST);
@@ -162,7 +169,10 @@ class wy3d_Renderer {
     const scale = object.scale;
 
     gl.useProgram(shader.shaderProgram);
-    glMatrix.mat4.identity(mvMatrix);
+
+    if(reset)
+      glMatrix.mat4.identity(mvMatrix);
+
     glMatrix.mat4.identity(nMatrix);
 
     translate(mvMatrix, position[0], position[1], position[2]);
@@ -197,7 +207,6 @@ class wy3d_Renderer {
 
     gl.uniform1i(shader.shaderProgram.uSampler, 0);
 
-    //if (alpha !== undefined && alpha !== null && alpha !== 1.0)
     gl.uniform1f(shader.shaderProgram.uAlpha, alpha);
 
     gl.uniform1i(shader.shaderProgram.uUseLightning, true);
@@ -218,6 +227,7 @@ class wy3d_Renderer {
   }
 
   setGrayscaleValues(x, y, z) {
+    gl.useProgram(this.grayscaleShader.shaderProgram);
     var vx = gl.getUniformLocation(renderer.grayscaleShader.shaderProgram, "vx");
     var vy = gl.getUniformLocation(renderer.grayscaleShader.shaderProgram, "vy");
     var vz = gl.getUniformLocation(renderer.grayscaleShader.shaderProgram, "vz");
@@ -225,6 +235,16 @@ class wy3d_Renderer {
     gl.uniform1f(vx, x);
     gl.uniform1f(vy, y);
     gl.uniform1f(vz, z);
+  }
+
+  setFxaaFBSize(resolution_x, resolution_y)
+  {
+    gl.useProgram(this.fxaaShader.shaderProgram);
+    var fbx = gl.getUniformLocation(this.fxaaShader.shaderProgram, "fbx");
+    var fby = gl.getUniformLocation(this.fxaaShader.shaderProgram, "fby");
+
+    gl.uniform1f(fbx, resolution_x);
+    gl.uniform1f(fby, resolution_y);
   }
 
   renderBackground(bckgTexture, dX, dY) {

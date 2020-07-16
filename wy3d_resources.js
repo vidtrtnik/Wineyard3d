@@ -21,7 +21,7 @@ class wy3d_Resource {
 
 function loadResource(type, path) {
   var resource = null;
-  getFile(path, type, function (contents) {
+  getFile(path, type, function(contents) {
     resource = contents;
     if (resource === null || resource === undefined)
       return false;
@@ -35,11 +35,10 @@ function getBlob(path) {
 }
 
 function getFile(url, type, callback) {
-  console.log("getFile: " + url);
   var xhr = new XMLHttpRequest();
   xhr.open('GET', url, false);
   xhr.overrideMimeType("text/plain; charset=x-user-defined");
-  xhr.onload = function () {
+  xhr.onload = function() {
     if (type == 'wy3dt') {
       var response = xhr.responseText;
       var buffer = new Uint8Array(response.length);

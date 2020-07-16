@@ -3,6 +3,7 @@ class wy3d_Scene {
     this.name = name;
 
     this.OBJECTS = [];
+    this.OBJ_GROUPS = [];
 
     this.backgroundColor = [0.075, 0.175, 0.275];
     this.ambientColor = [0.075, 0.075, 0.075];
@@ -29,7 +30,17 @@ class wy3d_Scene {
 
   setBackgroundTexture(texture) {
     this.backgroundTexture = texture;
-    this.backgroundQuadRes = renderer.wy3d.addResource("fboQuad", "./Wineyard3d/models/fboQuad.wy3dm") || renderer.wy3d.addResource("fboQuad", "./models/fboQuad.wy3dm");
+    var load_try1 = renderer.wy3d.addResource("fboQuad", "./models/fboQuad.wy3dm");
+    var load_try2 = renderer.wy3d.addResource("fboQuad", "./Wineyard3d/models/fboQuad.wy3dm");
+
+    this.backgroundQuadRes = null;
+    if(load_try1 !== null)
+      this.backgroundQuadRes = load_try1;
+    else if(load_try2 !== null)
+      this.backgroundQuadRes = load_try2;
+    else
+      return false;
+
     this.backgroundQuadModel = new wy3d_Model(this.backgroundQuadRes);
     this.backgroundObject = new wy3d_Object("backgroundQuadModel", this.backgroundQuadModel, this.backgroundTexture);
   }
@@ -73,6 +84,24 @@ class wy3d_Scene {
     var tmpObject = new wy3d_Object(name, model, texture, x, y, z, rx, ry, rz, sx, sy, sz, lr, lg, lb, a);
     this.OBJECTS.push(tmpObject);
     return tmpObject;
+  }
+
+  addObjectGroup()
+  {
+    if (arguments[0].constructor.name == "wy3d_ObjectGroup")
+    {
+      this.OBJ_GROUPS.push(arguments[0]);
+      return;
+    }
+
+    var group = [];
+    for(var i=1; i < arguments.length; i++)
+    {
+      group.push(arguments[i]);
+    }
+
+    var newObjGroup = new wy3d_ObjectGroup(arguments[1], group);
+    this.OBJ_GROUPS.push(newObjGroup);
   }
 
   getObject(name) {
@@ -131,19 +160,36 @@ class wy3d_Scene {
     //Izris objektov
     for (var i = 0; i < this.OBJECTS.length; i++) {
       var object = this.OBJECTS[i];
-      renderer.drawObject(renderer.mainShader, object, this.ambientColor);
+      renderer.drawObject(true, renderer.mainShader, object, this.ambientColor);
+    }
+
+    for (var i = 0; i < this.OBJ_GROUPS.length; i++) {
+      var objGroup = this.OBJ_GROUPS[i];
+      for (var j = 0; j < objGroup.group.length; j++) {
+        var object = objGroup.group[j];
+        glMatrix.mat4.identity(mvMatrix);
+        objGroup.mvMatrixStack_push();
+        objGroup.mvMatrixStack_translate(objGroup.position[0], objGroup.position[1], objGroup.position[2]);
+        objGroup.mvMatrixStack_rotateZ(objGroup.rotation[2]);
+        mvMatrix = objGroup.mvMatrixStack_get();
+
+        renderer.drawObject(false, renderer.mainShader, object, this.ambientColor);
+        objGroup.mvMatrixStack_pop();
+        glMatrix.mat4.identity(mvMatrix);
+      }
     }
 
     if (renderer.pp) {
       renderer.renderEffect(this, renderer.brightTreshShader, renderer.fboBrightTresh.fb, renderer.fboNoPP.tex);
       renderer.renderEffect(this, renderer.blurHShader, renderer.fboBlurH.fb, renderer.fboBrightTresh.tex);
       renderer.renderEffect(this, renderer.blurVShader, renderer.fboBlurV.fb, renderer.fboBlurH.tex);
+      renderer.renderEffect(this, renderer.combineShader, renderer.fboCombine.fb, renderer.fboNoPP.tex, renderer.fboBlurV.tex);
 
       if (this.grayscale) {
-        renderer.renderEffect(this, renderer.combineShader, renderer.fboCombine.fb, renderer.fboNoPP.tex, renderer.fboBlurV.tex);
         renderer.renderEffect(this, renderer.grayscaleShader, null, renderer.fboCombine.tex);
-      } else
-        renderer.renderEffect(this, renderer.combineShader, null, renderer.fboNoPP.tex, renderer.fboBlurV.tex);
+      } 
+      else
+        renderer.renderEffect(this, renderer.fxaaShader, null, renderer.fboCombine.tex);
     }
   }
 
@@ -154,44 +200,48 @@ class wy3d_Scene {
   moveCamera(x, y, z) {
     this.camPos = [x, y, z];
   }
-
-  checkCollisions() {
-    for (var i = 0; i < this.OBJECTS.length; i++) {
-      var obj1 = this.OBJECTS[i];
-      obj1.collisionInfo = [];
-
-      var obj1Xmin = obj1.position[0] - obj1.dimensions[0] / 2;
-      var obj1Xmax = obj1.position[0] + obj1.dimensions[0] / 2;
-
-      var obj1Ymin = obj1.position[1] - obj1.dimensions[1] / 2;
-      var obj1Ymax = obj1.position[1] + obj1.dimensions[1] / 2;
-
-      var obj1Zmin = obj1.position[2] - obj1.dimensions[1] / 2;
-      var obj1Zmax = obj1.position[2] + obj1.dimensions[1] / 2;
-
-      for (var j = 0; j < this.OBJECTS.length; j++) {
-        if (i == j)
-          continue;
-
-        var obj2 = this.OBJECTS[j];
-
-        var obj2Xmin = obj2.position[0] - obj1.dimensions[0] / 2;
-        var obj2Xmax = obj2.position[0] + obj1.dimensions[0] / 2;
-
-        var obj2Ymin = obj2.position[1] - obj1.dimensions[1] / 2;
-        var obj2Ymax = obj2.position[1] + obj1.dimensions[1] / 2;
-
-        var obj2Zmin = obj2.position[2] - obj1.dimensions[1] / 2;
-        var obj2Zmax = obj2.position[2] + obj1.dimensions[1] / 2;
-
-        if ((obj1Xmin <= obj2Xmax && obj1Xmax >= obj2Xmin) &&
-          (obj1Ymin <= obj2Ymax && obj1Ymax >= obj2Ymin) &&
-          (obj1Zmin <= obj2Zmax && obj1Zmax >= obj2Zmin)) {
-          obj1.collision = true;
-          obj1.collisionInfo.push(obj2.name);
-        }
+    
+  checkCollisions()
+  {
+      for (var i = 0; i < this.OBJECTS.length; i++)
+      {
+          var obj1 = this.OBJECTS[i];
+          obj1.collisionInfo = [];
+          
+          var obj1Xmin = obj1.position[0] - obj1.dimensions[0] / 2;
+          var obj1Xmax = obj1.position[0] + obj1.dimensions[0] / 2;
+              
+          var obj1Ymin = obj1.position[1] - obj1.dimensions[1] / 2;
+          var obj1Ymax = obj1.position[1] + obj1.dimensions[1] / 2;
+              
+          var obj1Zmin = obj1.position[2] - obj1.dimensions[1] / 2;
+          var obj1Zmax = obj1.position[2] + obj1.dimensions[1] / 2;
+          
+          for (var j = 0; j < this.OBJECTS.length; j++)
+          {
+              if(i == j)
+                  continue;
+              
+              var obj2 = this.OBJECTS[j];
+                  
+              var obj2Xmin = obj2.position[0] - obj1.dimensions[0] / 2;
+              var obj2Xmax = obj2.position[0] + obj1.dimensions[0] / 2;
+              
+              var obj2Ymin = obj2.position[1] - obj1.dimensions[1] / 2;
+              var obj2Ymax = obj2.position[1] + obj1.dimensions[1] / 2;
+              
+              var obj2Zmin = obj2.position[2] - obj1.dimensions[1] / 2;
+              var obj2Zmax = obj2.position[2] + obj1.dimensions[1] / 2;
+              
+              if((obj1Xmin <= obj2Xmax && obj1Xmax >= obj2Xmin) &&
+                 (obj1Ymin <= obj2Ymax && obj1Ymax >= obj2Ymin) &&
+                 (obj1Zmin <= obj2Zmax && obj1Zmax >= obj2Zmin))
+              {
+                    obj1.collision = true;
+                    obj1.collisionInfo.push(obj2.name);
+              }
+          }
       }
-    }
   }
 
 }

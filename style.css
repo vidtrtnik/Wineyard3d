@@ -35,7 +35,6 @@ body {
 a {
   margin: auto;
   color: Blue;
-  align: "center";
   font-family: 'Roboto', sans-serif;
   text-shadow: 0px 0px 3px white, 0px 0px 3px white, 0px 0px 3px white, 0px 0px 3px white;
 }
@@ -52,14 +51,12 @@ a:hover {
 h1 {
   margin: auto;
   color: Blue;
-  align: "center";
   font-family: 'Roboto', sans-serif;
   text-shadow: 0px 0px 3px white, 0px 0px 3px white, 0px 0px 3px white, 0px 0px 3px white;
 }
 
 h2 {
   margin: auto;
-  align: "center";
   color: aqua;
   font-family: 'Roboto', sans-serif;
   text-shadow: 0px 0px 3px white, 0px 0px 3px white, 0px 0px 3px white, 0px 0px 3px white;
