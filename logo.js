@@ -7,7 +7,7 @@ var pz = -5.5;
 
 var toggleGrayscale = false;
 var togglePP = true;
-
+var toggleAA = true;
 function start() {
     var canvas = document.getElementById("canvas");
     resy = window.innerHeight * 0.85;
@@ -25,13 +25,11 @@ function setGrayscale() {
 }
 
 function renderDemoScene() {
-    const m_res_logo = wy.addResource("m_res_logo", "./models/logo.wy3dm");
-    const t_res_logo = wy.addResource("m_res_logo", "./textures/logo.wy3dt");
-    const m_logo = new wy3d_Model(m_res_logo);
-    const t_logo = new wy3d_Texture(t_res_logo);
+    const m_logo = new wy3d_Model(wy, "./models/logo.wy3dm");
+    const t_logo = new wy3d_Texture(wy, "./textures/logo.wy3dt");
 
     demoScene = wy.addScene("demoScene");
-    logoObject1 = demoScene.addObject("demoObject1", m_logo, t_logo);
+    logoObject1 = demoScene.addObject("demoObject1", m_logo, t_logo, 0,0,-5.5, -90,0,-30);
 
     wy.renderScene(demoScene, demoFunction);
 }
@@ -57,6 +55,10 @@ function demoFunction() {
     if (wy.input.get("2"))
         logoObject1.addOpacity(-0.01);
 
+    if (wy.input.isDown("F")) {
+        toggleAA = !toggleAA;
+        demoScene.setFxaa(toggleAA);
+    }    
     if (wy.input.isDown("G"))
         toggleGrayscale = !toggleGrayscale;
 
@@ -67,5 +69,5 @@ function demoFunction() {
 
     setGrayscale();
 
-    logoObject1.setPosition(px, py, pz);
+    logoObject1.setPosition([px, py, pz]);
 }

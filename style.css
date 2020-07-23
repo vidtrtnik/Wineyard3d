@@ -9,26 +9,25 @@ body {
 
 #overlay {
   position: absolute;
-  left: 7px;
-  top: 7px;
+  left: 0.2rem;
+  top: 0.2rem;
   background-color: rgba(0, 0, 0, 0.66);
   color: white;
   font-family: monospace;
-  font-size: 18px;
+  font-size: 2vh;
   padding: 1em;
   border-radius: 1em;
-  border: 3px solid #ffffff;
+  border: 0.2rem solid #ffffff;
   text-shadow: 0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white;
 }
 
 .container {
   position: absolute;
   margin: auto;
-  top: 50px;
+  top: 3vh;
   right: 0;
   bottom: 0;
-  left: 0;
-  width: 85vw;
+  left: 13vw;
   height: 85vh;
 }
 
@@ -49,6 +48,7 @@ a:hover {
 }
 
 h1 {
+  font-size: 3.5vh;
   margin: auto;
   color: Blue;
   font-family: 'Roboto', sans-serif;
@@ -56,6 +56,7 @@ h1 {
 }
 
 h2 {
+  font-size: 3.5vh;
   margin: auto;
   color: aqua;
   font-family: 'Roboto', sans-serif;

@@ -1,6 +1,17 @@
 class wy3d_Texture {
-  constructor(resource) {
-    this.tex = this.initTexture(resource.res);
+  constructor(wy, resource_path, name) {
+    this.resource = null;
+    if(wy.constructor.name == "wy3d_Resource") 
+    {
+      this.resource = wy;
+    }
+    else
+    {
+      this.name = setName(name, resource_path);
+      this.resource = wy.addResource(this.name, resource_path);
+    }
+
+    this.tex = this.initTexture(this.resource.res);
   }
 
   initTexture(image) {
@@ -23,4 +34,14 @@ class wy3d_Texture {
 
     return texture;
   }
+}
+
+function setName(name, resource_path)
+{
+  if(name === undefined || name === null)
+  {
+    var fname = resource_path.split(/(\\|\/)/g).pop();
+    name = fname;
+  }
+  return name;
 }

@@ -23,6 +23,12 @@ class wy3d_Object {
       pos_y = y;
       pos_z = z;
     }
+    else if(x.constructor == Array)
+    {
+      pos_x = x[0];
+      pos_y = x[1];
+      pos_z = x[2];
+    }
 
     this.position = [pos_x, pos_y, pos_z];
   }
@@ -36,6 +42,12 @@ class wy3d_Object {
       new_rx = rx;
       new_ry = ry;
       new_rz = rz;
+    }
+    else if(rx.constructor == Array)
+    {
+      new_rx = rx[0];
+      new_ry = rx[1];
+      new_rz = rx[2];
     }
 
     this.rotation = [new_rx, new_ry, new_rz];
@@ -51,6 +63,12 @@ class wy3d_Object {
       new_sy = sy;
       new_sz = sz;
     }
+    else if(sx.constructor == Array)
+    {
+      new_sx = sx[0];
+      new_sy = sx[1];
+      new_sz = sx[2];
+    }
 
     this.scale = [new_sx, new_sy, new_sz];
   }
@@ -64,6 +82,12 @@ class wy3d_Object {
       new_lr = lr;
       new_lg = lg;
       new_lb = lb;
+    }
+    else if(sx.constructor == Array)
+    {
+      new_lr = lr[0];
+      new_lg = lr[1];
+      new_lb = lr[2];
     }
 
     this.light = [new_lr, new_lg, new_lb];
@@ -123,6 +147,12 @@ function setPosition(x, y, z) {
     pos_y = y;
     pos_z = z;
   }
+  else if(x.constructor == Array)
+    {
+      pos_x = x[0];
+      pos_y = x[1];
+      pos_z = x[2];
+    }
 
   var ret = [pos_x, pos_y, pos_z];
   return ret;
@@ -138,6 +168,12 @@ function setRotation(rx, ry, rz) {
     new_ry = ry;
     new_rz = rz;
   }
+  else if(rx.constructor == Array)
+  {
+    new_rx = rx[0];
+    new_ry = rx[1];
+    new_rz = rx[2];
+  }
 
   var ret = [new_rx, new_ry, new_rz];
   return ret;
@@ -152,6 +188,12 @@ function setScale(sx, sy, sz) {
     new_sx = sx;
     new_sy = sy;
     new_sz = sz;
+  }
+  else if(sx.constructor == Array)
+  {
+    new_sx = sx[0];
+    new_sy = sx[1];
+    new_sz = sx[2];
   }
 
   var ret = [new_sx, new_sy, new_sz];

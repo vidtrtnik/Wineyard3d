@@ -1,15 +1,39 @@
-function wy3d_Model(resource) {
-  this.v = parseModel_vertices(resource.res);
-  this.i = parseModel_indices(resource.res);
-  this.n = parseModel_normals(resource.res);
-  this.t = parseModel_texcoords(resource.res);
-  this.b = parseModel_boundingbox(resource.res);
+function wy3d_Model(wy, resource_path, name) {
+
+  this.name = null;
+  this.resource = null;
+  if(wy.constructor.name == "wy3d_resource") 
+  {
+    this.resource = wy;
+  }
+  else
+  {
+    this.name = setName(name, resource_path);
+    this.resource = wy.addResource(this.name, resource_path);
+  }
+
+  this.v = parseModel_vertices(this.resource.res);
+  this.i = parseModel_indices(this.resource.res);
+  this.n = parseModel_normals(this.resource.res);
+  this.t = parseModel_texcoords(this.resource.res);
+  this.b = parseModel_boundingbox(this.resource.res);
 
   this.vertexBuffer = initVertexBuffer(this.v);
   this.indexBuffer = initIndexBuffer(this.i);
   this.normalBuffer = initNormalBuffer(this.n);
   this.textureBuffer = initTextureBuffer(this.t);
   this.boundingBox = this.b;
+
+}
+
+function setName(name, resource_path)
+{
+  if(name === undefined || name === null)
+  {
+    var fname = resource_path.split(/(\\|\/)/g).pop();
+    name = fname;
+  }
+  return name;
 }
 
 function parseModel_vertices(content) {

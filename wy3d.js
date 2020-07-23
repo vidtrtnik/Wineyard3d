@@ -26,6 +26,8 @@ class Wineyard3D {
 
     wy3d_Input = wy3d_InitializeInput("keyboard");
     this.input = wy3d_Input;
+
+    this.version = "v0.0.4";
   }
 
   addResource(name, path) {

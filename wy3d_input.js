@@ -51,6 +51,7 @@ class wy3d_InputClass {
     var enter = new wy3d_Key("enter", 13);
     var k1 = new wy3d_Key("1", 49);
     var k2 = new wy3d_Key("2", 50);
+    var kF = new wy3d_Key("F", 70);
     var kG = new wy3d_Key("G", 71);
     var kP = new wy3d_Key("P", 80);
 
@@ -62,6 +63,7 @@ class wy3d_InputClass {
     this.KEYS.push(enter);
     this.KEYS.push(k1);
     this.KEYS.push(k2);
+    this.KEYS.push(kF);
     this.KEYS.push(kG);
     this.KEYS.push(kP);
 

@@ -5,7 +5,7 @@
 It is in development since 2018. I wrote this engine for my personal projects.
 Wineyard3D runs in all web browsers supported by WebGL 1.0.
 
-![Alt text](/screenshots/wineyard3d_logo_scr.png?raw=true "Wineyard3d Logo Scene")
+![Alt text](/screenshots/wineyard3d_logo_scr.jpg?raw=true "Wineyard3d Logo Scene")
 
 Currently Wineyard3d can only load models which are stored in proprietary format "<b>wy3dm</b>" <i>(Wineyard 3D model)</i>. Wineyard 3D model file contains unpacked .obj vertices, texture vertices and some additional data. Converter from .obj to .wy3dm format is available on my github repository, [here](https://github.com/vidtrtnik/c2wy3dm).
 
@@ -13,7 +13,8 @@ Currently, Wineyard3d only supports textures in 8-bit PNG format, without alpha 
 
 ## My game engine currently supports
 - Directional and ambient lighting
-- Postprocessing effects (Bloom, gaussian blur...)
+- Postprocessing effects (Bloom, gaussian blur, FXAA antialiasing)
+- Grouping objects
 - Custom glsl shaders
 - Collision detection (3D AABB)
 - Keyboard input
@@ -28,12 +29,10 @@ Pull this repository to your local machine. Run a web server from folder Wineyar
 var canvas = document.getElementById("canvas");
 var wy = new Wineyard3D(canvas, 1280, 720, true);
 ```
-### Add resources, define models and textures
+### Define models and textures
 ```javascript
-var m_res_logo = wy.addResource("m_res_logo", "./models/logo.wy3dm");
-var t_res_logo = wy.addResource("m_res_logo", "./textures/logo.wy3dt");
-var m_logo = new wy3d_Model(m_res_logo);
-var t_logo = new wy3d_Texture(t_res_logo);
+var m_logo = new wy3d_Model(wy, "./models/logo.wy3dm", "m_logo");
+var t_logo = new wy3d_Texture(wy, "./textures/logo.wy3dt", "t_logo");
 ```
 
 ### Define a new scene and add the objects
@@ -45,11 +44,15 @@ logoObject1 = demoScene.addObject("logoObject1", m_logo, t_logo);
 ### Move an object
 ```javascript
 logoObject1.setPosition(px, py, pz);
+// or
+logoObject1.setPosition([px, py, pz]);
 ```
 
 ### Rotate an object
 ```javascript
 logoObject1.setRotation(rx, ry, rz);
+// or
+logoObject1.setRotation([rx, ry, rz]);
 ```
 
 ## Third-Party libraries
@@ -67,5 +70,5 @@ Wineyard3d uses the following open source javascript libraries:
 - Touchscreen support (for browsers on Android/iOS)
 
 
-<i>Current version: 0.0.2</i>  
+<i>Current version: 0.0.4</i>  
 <b>Author: Vid Trtnik<b>

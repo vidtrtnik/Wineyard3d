@@ -22,6 +22,8 @@ class wy3d_Scene {
 
     this.grayscale = false;
     this.grayscaleValues = this.setGrayscale(0.5, 0.5, 0.5);
+
+    this.fxaa = true;
   }
 
   setBackgroundColor(r, g, b) {
@@ -70,6 +72,11 @@ class wy3d_Scene {
   setGrayscale(r, g, b) {
     renderer.setGrayscaleValues(r, g, b);
     return [r, g, b];
+  }
+
+  setFxaa(toggle)
+  {
+    this.fxaa = toggle;
   }
 
   getName() {
@@ -185,11 +192,14 @@ class wy3d_Scene {
       renderer.renderEffect(this, renderer.blurVShader, renderer.fboBlurV.fb, renderer.fboBlurH.tex);
       renderer.renderEffect(this, renderer.combineShader, renderer.fboCombine.fb, renderer.fboNoPP.tex, renderer.fboBlurV.tex);
 
-      if (this.grayscale) {
+      if (this.grayscale)
         renderer.renderEffect(this, renderer.grayscaleShader, null, renderer.fboCombine.tex);
-      } 
-      else
+
+      else if(!this.grayscale && this.fxaa)
         renderer.renderEffect(this, renderer.fxaaShader, null, renderer.fboCombine.tex);
+
+      else
+        renderer.renderEffect(this, renderer.combineShader, null, renderer.fboNoPP.tex, renderer.fboBlurV.tex);
     }
   }
 

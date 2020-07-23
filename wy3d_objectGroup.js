@@ -22,6 +22,12 @@ class wy3d_ObjectGroup {
       pos_y = y;
       pos_z = z;
     }
+    else if(sx.constructor == Array)
+    {
+      pos_x = x[0];
+      pos_y = x[1];
+      pos_z = x[2];
+    }
 
     this.position = [pos_x, pos_y, pos_z];
   }
@@ -36,7 +42,13 @@ class wy3d_ObjectGroup {
       new_ry = ry;
       new_rz = rz;
     }
-
+    else if(rx.constructor == Array)
+    {
+      new_rx = rx[0];
+      new_ry = rx[1];
+      new_rz = rx[2];
+    }
+    
     this.rotation = [new_rx, new_ry, new_rz];
   }
 
@@ -49,6 +61,11 @@ class wy3d_ObjectGroup {
       new_sx = sx;
       new_sy = sy;
       new_sz = sz;
+    }
+    else if(sx.constructor == Array) {
+      new_sx = sx[0];
+      new_sy = sx[1];
+      new_sz = sx[2];
     }
 
     this.scale = [new_sx, new_sy, new_sz];
