@@ -23,7 +23,7 @@ class wy3d_Object {
       pos_y = y;
       pos_z = z;
     }
-    else if(x.constructor == Array)
+    else if(x !== undefined && x.constructor == Array)
     {
       pos_x = x[0];
       pos_y = x[1];
@@ -43,7 +43,7 @@ class wy3d_Object {
       new_ry = ry;
       new_rz = rz;
     }
-    else if(rx.constructor == Array)
+    else if(rx !== undefined && rx.constructor == Array)
     {
       new_rx = rx[0];
       new_ry = rx[1];
@@ -63,7 +63,7 @@ class wy3d_Object {
       new_sy = sy;
       new_sz = sz;
     }
-    else if(sx.constructor == Array)
+    else if(sx !== undefined && sx.constructor == Array)
     {
       new_sx = sx[0];
       new_sy = sx[1];
@@ -83,7 +83,7 @@ class wy3d_Object {
       new_lg = lg;
       new_lb = lb;
     }
-    else if(sx.constructor == Array)
+    else if(sx !== undefined && sx.constructor == Array)
     {
       new_lr = lr[0];
       new_lg = lr[1];
@@ -147,7 +147,7 @@ function setPosition(x, y, z) {
     pos_y = y;
     pos_z = z;
   }
-  else if(x.constructor == Array)
+  else if(x !== undefined && x.constructor == Array)
     {
       pos_x = x[0];
       pos_y = x[1];
@@ -168,7 +168,7 @@ function setRotation(rx, ry, rz) {
     new_ry = ry;
     new_rz = rz;
   }
-  else if(rx.constructor == Array)
+  else if(rx !== undefined && rx.constructor == Array)
   {
     new_rx = rx[0];
     new_ry = rx[1];
@@ -189,7 +189,7 @@ function setScale(sx, sy, sz) {
     new_sy = sy;
     new_sz = sz;
   }
-  else if(sx.constructor == Array)
+  else if(sx !== undefined && sx.constructor == Array)
   {
     new_sx = sx[0];
     new_sy = sx[1];

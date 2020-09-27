@@ -6,6 +6,8 @@ class Wineyard3D {
     this.resolution_x = resx;
     this.resolution_y = resy;
 
+    this.canvas_bcr = this.canvas.getBoundingClientRect();
+
     if (resx === null || resx === undefined || resy === null || resy === undefined) {
       this.resolution_x = this.canvas.clientWidth;
       this.resolution_y = this.canvas.clientHeight;
@@ -24,7 +26,7 @@ class Wineyard3D {
 
     this.currentScene = "";
 
-    wy3d_Input = wy3d_InitializeInput("keyboard");
+    wy3d_Input = wy3d_InitializeInput(this.canvas);
     this.input = wy3d_Input;
 
     this.version = "v0.0.4";

@@ -66,7 +66,6 @@ Wineyard3d uses the following open source javascript libraries:
 - Documentation, more code examples and tutorials
 - Audio support (music, sound effects)
 - Improved lighting
-- Mouse input
 - Touchscreen support (for browsers on Android/iOS)
 
 
