@@ -121,7 +121,6 @@ function mousePosHandler(event) {
     var mouseCoords = wy3d_Input.MOUSE_COORDS;
     mouseCoords[0] = event.pageX;
     mouseCoords[1] = event.pageY;
-    //console.log(wy3d_Input.MOUSE_COORDS[0] + ", " + wy3d_Input.MOUSE_COORDS[1]);
 }
 
 function mouseClickHandler(event) {
@@ -131,8 +130,6 @@ function mouseClickHandler(event) {
 function mousePosCanvasHandler(event) {
   var mouseCoordsCanvas = wy3d_Input.MOUSE_COORDS_CANVAS;
   var bcr = wy3d_Input.canvas.getBoundingClientRect();
-  console.log(bcr);
   mouseCoordsCanvas[0] = event.clientX - bcr.left;
   mouseCoordsCanvas[1] = event.clientY - bcr.top;
-  console.log("OUT: " + wy3d_Input.MOUSE_COORDS_CANVAS[0] + ", " + wy3d_Input.MOUSE_COORDS_CANVAS[1]);
 }
