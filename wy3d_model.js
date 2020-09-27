@@ -2,7 +2,7 @@ function wy3d_Model(wy, resource_path, name) {
 
   this.name = null;
   this.resource = null;
-  if(wy.constructor.name == "wy3d_resource") 
+  if(wy.constructor.name == "wy3d_Resource") 
   {
     this.resource = wy;
   }
@@ -23,7 +23,6 @@ function wy3d_Model(wy, resource_path, name) {
   this.normalBuffer = initNormalBuffer(this.n);
   this.textureBuffer = initTextureBuffer(this.t);
   this.boundingBox = this.b;
-
 }
 
 function setName(name, resource_path)
