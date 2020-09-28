@@ -204,7 +204,6 @@ class wy3d_Renderer {
     else
       gl.bindTexture(gl.TEXTURE_2D, object.texture.tex);
 
-
     gl.uniform1i(shader.shaderProgram.uSampler, 0);
 
     gl.uniform1f(shader.shaderProgram.uAlpha, alpha);

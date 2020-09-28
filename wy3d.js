@@ -28,8 +28,12 @@ class Wineyard3D {
 
     wy3d_Input = wy3d_InitializeInput(this.canvas);
     this.input = wy3d_Input;
+    this.hideCursor = true;
 
-    this.version = "v0.0.4";
+    if(this.hideCursor)
+      this.canvas.style.cursor = "none";
+
+    this.version = "v0.0.5";
   }
 
   addResource(name, path) {

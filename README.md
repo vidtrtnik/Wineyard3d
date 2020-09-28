@@ -1,7 +1,7 @@
 # Wineyard3d
 3D game engine, written in Javascript and WebGL. 
 
-<b>Wineyard3d</b> is a 3D game engine, written in <b>Javascript</b> and <b>WebGL</b>. 
+<b>Wineyard3d</b> is a free and open-source 3D game engine, written in <b>Javascript</b> and <b>WebGL</b>. 
 It is in development since 2018. I wrote this engine for my personal projects.
 Wineyard3D runs in all web browsers supported by WebGL 1.0.
 
@@ -9,7 +9,7 @@ Wineyard3D runs in all web browsers supported by WebGL 1.0.
 
 Currently Wineyard3d can only load models which are stored in proprietary format "<b>wy3dm</b>" <i>(Wineyard 3D model)</i>. Wineyard 3D model file contains unpacked .obj vertices, texture vertices and some additional data. Converter from .obj to .wy3dm format is available on my github repository, [here](https://github.com/vidtrtnik/c2wy3dm).
 
-Currently, Wineyard3d only supports textures in 8-bit PNG format, without alpha channel. Texture resolution must be a power of 2.
+Wineyard3d only supports textures in 8-bit PNG format, without alpha channel.
 
 ## My game engine currently supports
 - Directional and ambient lighting
@@ -17,8 +17,9 @@ Currently, Wineyard3d only supports textures in 8-bit PNG format, without alpha 
 - Grouping objects
 - Custom glsl shaders
 - Collision detection (3D AABB)
-- Keyboard input
+- Mouse and Keyboard input
 - Alpha blending (custom opacity for ingame objects)
+- Anisotropic filtering
 
 ## Demo scene
 Pull this repository to your local machine. Run a web server from folder Wineyard3d (for example, with Python: <i>python3 -m http.server</i>). Open web browser, navigate to your server address and open <b>logo.html</b>. For the FPS overlay I was following [this example](https://webglfundamentals.org/webgl/lessons/webgl-text-html.html).
@@ -55,6 +56,13 @@ logoObject1.setRotation(rx, ry, rz);
 logoObject1.setRotation([rx, ry, rz]);
 ```
 
+### Get keyboard events
+```javascript
+var up = wy.input.get("up");
+if (wy.input.isDown("P")){ }
+if (wy.input.isDown("space"){ }
+```
+
 ## Third-Party libraries
 Wineyard3d uses the following open source javascript libraries:
 - [UPNG.js](https://github.com/photopea/UPNG.js)
@@ -69,5 +77,5 @@ Wineyard3d uses the following open source javascript libraries:
 - Touchscreen support (for browsers on Android/iOS)
 
 
-<i>Current version: 0.0.4</i>  
+<i>Current version: 0.0.5</i>  
 <b>Author: Vid Trtnik<b>

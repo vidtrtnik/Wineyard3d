@@ -46,7 +46,8 @@ class wy3d_InputClass {
     this.KEYS = [];
     this.MOUSE_COORDS = [0, 0];
     this.MOUSE_COORDS_CANVAS = [0, 0];
-    this.MOUSE_CLICK = false;
+    this.LMOUSE_CLICK = false;
+    this.RMOUSE_CLICK = false;
 
     var up = new wy3d_Key("up", 38);
     var down = new wy3d_Key("down", 40);
@@ -58,6 +59,7 @@ class wy3d_InputClass {
     var k2 = new wy3d_Key("2", 50);
     var kF = new wy3d_Key("F", 70);
     var kG = new wy3d_Key("G", 71);
+    var kM = new wy3d_Key("M", 77);
     var kP = new wy3d_Key("P", 80);
 
     this.KEYS.push(up);
@@ -70,13 +72,20 @@ class wy3d_InputClass {
     this.KEYS.push(k2);
     this.KEYS.push(kF);
     this.KEYS.push(kG);
+    this.KEYS.push(kM);
     this.KEYS.push(kP);
 
     document.addEventListener('keydown', keyDownHandler, false);
     document.addEventListener('keyup', keyUpHandler, false);
     document.addEventListener('mousemove', mousePosHandler, false);
-    document.addEventListener('click', mouseClickHandler, false);
+    document.addEventListener('click', mouseLClickHandler, false);
+    document.addEventListener('contextmenu', mouseRClickHandler, false);
     this.canvas.addEventListener('mousemove', mousePosCanvasHandler, false);
+
+    this.canvas.addEventListener('contextmenu', e => {
+      e.preventDefault();
+    });
+    
   }
 
   isDown(name) {
@@ -123,8 +132,13 @@ function mousePosHandler(event) {
     mouseCoords[1] = event.pageY;
 }
 
-function mouseClickHandler(event) {
-  wy3d_Input.MOUSE_CLICK = true;
+function mouseLClickHandler(event) {
+  wy3d_Input.LMOUSE_CLICK = true;
+}
+
+function mouseRClickHandler(event) {
+  wy3d_Input.RMOUSE_CLICK = true;
+  console.log("RCLICK!!!");
 }
 
 function mousePosCanvasHandler(event) {

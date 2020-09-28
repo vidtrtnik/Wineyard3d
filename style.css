@@ -24,11 +24,11 @@ body {
 .container {
   position: absolute;
   margin: auto;
-  top: 3vh;
+  top: 7vh;
   right: 0;
   bottom: 0;
   left: 13vw;
-  height: 85vh;
+  height: 87vh;
 }
 
 a {

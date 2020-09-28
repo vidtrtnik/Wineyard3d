@@ -23,13 +23,22 @@ class wy3d_Texture {
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, image.width, image.height, 0, gl.RGB, gl.UNSIGNED_BYTE, image.data);
 
     if (isPowerOf2(image.width) && isPowerOf2(image.height))
+    {
       gl.generateMipmap(gl.TEXTURE_2D);
-
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+    }
     else {
-      //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    }
+    var ext_af = gl.getExtension("EXT_texture_filter_anisotropic");
+    if(ext_af !== null)
+    {
+      var max_af = gl.getParameter(ext_af.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+      if(max_af > 1)
+        gl.texParameterf(gl.TEXTURE_2D, ext_af.TEXTURE_MAX_ANISOTROPY_EXT, max_af);
     }
 
     return texture;
