@@ -7,7 +7,7 @@ Wineyard3D runs in all web browsers supported by WebGL 1.0.
 
 ![Alt text](/screenshots/wineyard3d_logo_scr.jpg?raw=true "Wineyard3d Logo Scene")
 
-Currently Wineyard3d can only load models which are stored in proprietary format "<b>wy3dm</b>" <i>(Wineyard 3D model)</i>. Wineyard 3D model file contains unpacked .obj vertices, texture vertices and some additional data. Converter from .obj to .wy3dm format is available on my github repository, [here](https://github.com/vidtrtnik/c2wy3dm).
+Currently Wineyard3d can only load models which are stored in proprietary format "<b>wy3dm</b>" <i>(Wineyard 3D model)</i>. Wineyard 3D model file contains unpacked .obj vertices, texture vertices and some additional data. Converter from .obj to .wy3dm format is available on my github repository: [c2wy3dm](https://github.com/vidtrtnik/c2wy3dm).
 
 Wineyard3d only supports textures in 8-bit PNG format, without alpha channel.
 

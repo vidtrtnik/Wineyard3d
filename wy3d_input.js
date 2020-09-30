@@ -138,7 +138,6 @@ function mouseLClickHandler(event) {
 
 function mouseRClickHandler(event) {
   wy3d_Input.RMOUSE_CLICK = true;
-  console.log("RCLICK!!!");
 }
 
 function mousePosCanvasHandler(event) {

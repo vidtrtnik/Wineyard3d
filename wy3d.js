@@ -3,8 +3,8 @@ class Wineyard3D {
     this.canvas = canvas;
     gl = this.initWebGL(canvas);
 
-    this.resolution_x = resx;
-    this.resolution_y = resy;
+    this.resolution_x = Math.round(resx);
+    this.resolution_y = Math.round(resy);
 
     this.canvas_bcr = this.canvas.getBoundingClientRect();
 
@@ -16,6 +16,14 @@ class Wineyard3D {
     const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
     this.vendorInfo = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
     this.rendererInfo = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+    this.outputInfo = false;
+
+    if(this.outputInfo)
+    {
+      console.log("UNMASKED_VENDOR_WEBGL: " + this.vendorInfo);
+      console.log("UNMASKED_RENDERER_WEBGL: " + this.rendererInfo);
+      console.log("Resolution: " + this.resolution_x + ", " + this.resolution_y);
+    }
 
     this.pp = pp;
 
@@ -98,10 +106,10 @@ class Wineyard3D {
         alpha: false
       })
     } catch (e) {
-      alert("initWebGL() --> canvas.getContext() ERROR");
+      console.log("initWebGL() --> canvas.getContext() ERROR");
     }
     if (!tmp_gl) {
-      alert("No WEBGL2 context");
+      console.log("No WEBGL2 context");
       return null;
     }
     return tmp_gl;
