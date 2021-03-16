@@ -41,7 +41,7 @@ class Wineyard3D {
     if(this.hideCursor)
       this.canvas.style.cursor = "none";
 
-    this.version = "v0.0.5";
+    this.version = "v0.0.5a";
   }
 
   addResource(name, path) {

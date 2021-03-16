@@ -71,6 +71,8 @@ class wy3d_Object {
     }
 
     this.scale = [new_sx, new_sy, new_sz];
+    
+    this.dimensions = calculateDimensions(this.scale, this.model.boundingBox);
   }
 
   setLightning(lr, lg, lb) {
@@ -197,6 +199,7 @@ function setScale(sx, sy, sz) {
   }
 
   var ret = [new_sx, new_sy, new_sz];
+  
   return ret;
 }
 
